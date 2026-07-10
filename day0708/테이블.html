@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테이블 개념</title>
+</head>
+<body>
+    <!-- html table은 건축물과 동일-->
+
+    <!-- Shift + Alt + ↓ : 라인 복제(Line Duplicate) -->
+     
+    <table border="1px">
+        <te>
+            <td rowspan="2">301호</td>
+            <td>302호</td>
+            <td>303호</td>
+        </te>
+        <tr>
+            <td colspan="2">202호</td>
+        </tr>
+        <tr>
+            <td colspan="3">101호</td>
+        </tr>
+    </table>
+        <br>
+       <table border="1px">
+        <te>
+            <td colspan="3">ID</td>
+        </te>
+        <te>
+            <td colspan="5"><input type="text"placeholder="your id..."> 
+        </td>
+        </te>
+        </tr>
+            <td colspan="3">password</td>
+        <te>
+            <td colspan="5"><input type="password"placeholder="your password..."> </td>
+        </te>
+        </tr>
+        <te>
+            <td colspan="3">name</td>
+            <td colspan="5">
+            <input type="password"placeholder="your name"> </td>
+        </te>
+        </tr>
+            <td colspan="3">이메일</td>
+        <te>
+            <td colspan="2"><input type="이메일"placeholder=""></rd>@     <select>
+            <option value="">구글</option>
+            <option value="">네이버</option>
+            <option value="">다음</option>
+            </select></td>
+        </te>
+        </tr>
+        <te>
+            <td colspan="3">보유기술</td>
+            <td colspan="3">     
+            <input type="checkbox" >JAVA
+            <input type="checkbox" >Spring
+            <input type="checkbox" >DB
+            <input type="checkbox" >FrontEnd</td> <re></re>
+        </tr>
+            <td colspan="3">경력<br>사항</td>
+        <te>
+            <td colspan="2">  <textarea rows="5" cols="50" placeholder="경력을 입력하세요."></textarea></td>
+        </te>
+        </tr>
+            <td colspan="3">개인정보 <br>수신동의 </td>
+        <te>
+            <td colspan="2"><input  
+            <input type="radio" name="agree"> 동의
+            <input type="radio" name="agree"> 미동의
+        </te>
+       </table> 
+       <br>
+        <tr>
+            <td colspan="2" class="btn">
+            <input type="submit" value="회원가입">
+            <input type="reset" value="취소">
+        </td>
+    </tr>
+
+</body>
+</html>
+
