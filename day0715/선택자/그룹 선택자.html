@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            background-color: #f0f0f0;
+            font-weight: bold;
+
+        }
+        /*and는 쉼표로 표현*/
+        
+        h1, h2{
+            color:red
+        }
+        .parent{
+            border:1px dotted blue;
+        }
+        /*.parent의 직계자식들 중 sapn에 대해서만..*/
+        .parent > span{
+            background-color: #ffcccc;
+        }
+        /*후손 선택자*/
+        .parent span{
+            color:red;
+
+        }
+        /*인접 형제 선택자*/
+        #target + span{
+            background-color: #ccffcc;
+        }
+
+        /*
+        일반 형제 선택자
+        */
+        #target ~ span{
+            border: 3px solid #f90;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS 선택자 공부 중</h1>
+    <h2>아래 박스들의 변화를 확인해보세요</h2>
+    
+    <!-- division의 약어 (화면을 분할하는 용도의 태그) -->
+    <div class="parent">
+        <!-- span 아무런 효과가 없는 태그
+         단 마크업이 적용되었으므로, style 등을 적용할
+         기회가 생기는데에 의미가 있음. -->
+
+         <span >1번 자식</span> 
+         <span id="target">2번 자식</span> 
+         <span >3번 자식</span> 
+         <span >4번 자식</span> 
+         <p> 
+             <span >5번 자식</span> 
+         </p>
+        </div>
+
+</body>
+</html>

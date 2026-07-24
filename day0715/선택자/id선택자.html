@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            background-color: yellow;
+        }
+        /* css 선택자 중 아이디를 사용하려면 #을 붙여야 한다*/
+        #pass{
+            background-color: blue;
+        }
+
+        /*
+        id와 name의 공통점 : 문서내의 요소들간의 구분이 목적
+        id와 name의 차이점 : id는 중복을 허용하지 않음, name은 중복 허용
+        */
+        input[name="email"]{
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" placeholder="your ID">
+    <input type="text" id="pass" placeholder="your password">
+    <input type="text" name="email" placeholder="your email">
+
+</body>
+</html>
