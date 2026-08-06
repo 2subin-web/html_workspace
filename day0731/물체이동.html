@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 
+        HTML은 문서이기 때문에, 태그 요소들의 위치가 자유롭지 않다
+        따라서 개발자가 원하는 좌표에 요소를 위치시키는 방법은 따로 없다
+        해결책? CSS의 position 을 이용하면 됨 *
+        
+        [css position]
+        1) static : 고정된 위치 속성
+                    모든 태그의 디폴트 속성
+                    left(x축), top(y축) 값이 적용되지 않는 속성
+        */
+        #pic{
+            width: 70px;
+
+            position: absolute;
+           /* position: relative; */ 
+                    /*기존 static에 left top이 적용가능한 위치속성*/
+                    /*relative 중심점이 설정된 게 아니라, 다른 태그의
+                    의해 밀려난 즉 상대적으로 밀려난 위치가 바로 중심*/
+            
+            left: 0px;
+        }
+
+            .container{
+            position: relative; /*그냥 본연의 위치에 둠*/
+            width: 900px;
+            height: 700px;
+            background-image: url(../../desert/BG.png);
+
+            /*배경이미지의 크기를 div와 억지로 일치시킴*/
+            background-size: 990px 700px;
+        }
+    </style>
+    <script>
+        let y = 0;
+        let speed = 10;
+        function move() {
+
+            y = y + speed;
+
+            if (y >= 500) {
+                y = 500;
+                speed = -10;
+            }
+
+            if (y <= 0) {
+                y = 0;
+                speed = 10;
+            }
+
+            document.getElementById("box").style.top = y + "px";
+        }
+
+        function auto() {
+            setInterval("move()", 100);
+        }
+    </script>
+</head>
+
+<body>
+
+    <button onclick="move()">수동</button>
+    <button onclick="auto()">자동</button>
+
+    <div class="container">
+        <div id="box"></div>
+    </div>
+
+</body>
+</html>

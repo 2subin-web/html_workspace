@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인물 얼굴 왁뿌볼</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #fff8dc, #ffd8ea);
+            color: #333;
+        }
+
+        .app {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 24px;
+            padding: 18px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .row {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            font-size: 14px;
+        }
+
+        button {
+            border: none;
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #ff6fa7, #ff9bc0);
+            color: white;
+        }
+
+        .btn-yellow {
+            background: linear-gradient(90deg, #ffd44d, #ffb300);
+            color: #4b3200;
+        }
+
+        .btn-blue {
+            background: linear-gradient(90deg, #7e8cff, #5db9ff);
+            color: white;
+        }
+
+        .btn-gray {
+            background: #f0f0f0;
+            color: #444;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        #statusBox {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            background: #fff6f8;
+            min-height: 70px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .previewWrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        #previewFace {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #f6f6f6;
+            border: 5px solid white;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .play-area {
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at center, rgba(255,255,255,0.65), rgba(255,255,255,0.2)),
+                linear-gradient(180deg, #fff7cc, #ffd9e7);
+            border-radius: 28px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+        }
+
+        .stage-title {
+            text-align: center;
+            padding-top: 18px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .stage-guide {
+            text-align: center;
+            color: #6b6b6b;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        #meterWrap {
+            width: 75%;
+            height: 16px;
+            margin: 16px auto 0;
+            background: rgba(255,255,255,0.8);
+            border-radius: 99px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        #meterFill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffbe3d, #ff5f8f);
+            transition: width 0.12s linear;
+        }
+
+        #meterText {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #6b6b6b;
+        }
+
+        #stage {
+            width: 100%;
+            height: 560px;
+            position: relative;
+        }
+
+        #ballWrap {
+            width: 360px;
+            height: 360px;
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+        }
+
+        #shadow {
+            width: 240px;
+            height: 42px;
+            position: absolute;
+            left: 50%;
+            top: 82%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            background: rgba(120, 70, 0, 0.18);
+            filter: blur(10px);
+        }
+
+        #goo {
+            --faceImage: none;
+            width: 228px;
+            height: 228px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.84);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.18), rgba(255,255,255,0.05)),
+                var(--faceImage);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow:
+                inset 14px 14px 20px rgba(255,255,255,0.42),
+                inset -18px -18px 22px rgba(96, 0, 60, 0.18),
+                0 16px 28px rgba(94, 0, 56, 0.18);
+            transition:
+                opacity 0.6s,
+                transform 0.45s cubic-bezier(.2, .8, .2, 1);
+            overflow: hidden;
+        }
+
+        #goo::before {
+            content: "";
+            position: absolute;
+            width: 64px;
+            height: 34px;
+            left: 22px;
+            top: 22px;
+            border-radius: 50%;
+            transform: rotate(-20deg);
+            background: rgba(255,255,255,0.5);
+            filter: blur(2px);
+        }
+
+        #goo.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #gooFaceOverlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 115%, rgba(255, 111, 167, 0.35), transparent 38%),
+                radial-gradient(circle at 15% 15%, rgba(255,255,255,0.22), transparent 22%);
+            pointer-events: none;
+        }
+
+        #shell {
+            width: 270px;
+            height: 270px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            cursor: pointer;
+            background:
+                radial-gradient(circle at 34% 28%, #fff6ad 0%, #ffd93d 28%, #f3a800 66%, #be6500 100%);
+            box-shadow:
+                inset 16px 16px 20px rgba(255,255,255,0.45),
+                inset -24px -24px 30px rgba(128, 60, 0, 0.28),
+                0 24px 34px rgba(120, 70, 0, 0.22);
+            transition: transform 0.12s;
+            z-index: 5;
+        }
+
+        #shell::before {
+            content: "";
+            position: absolute;
+            width: 62px;
+            height: 34px;
+            left: 62px;
+            top: 30px;
+            border-radius: 50%;
+            transform: rotate(-25deg);
+            background: rgba(255,255,255,0.58);
+            filter: blur(3px);
+        }
+
+        #shell.pressed {
+            transform: translate(-50%, -50%) scaleX(1.08) scaleY(0.88);
+        }
+
+        #shell.hide-shell {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        #crackLayer {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        #shell.crack-1 #crackLayer {
+            opacity: 0.35;
+        }
+
+        #shell.crack-2 #crackLayer {
+            opacity: 0.7;
+        }
+
+        #shell.crack-3 #crackLayer {
+            opacity: 1;
+        }
+
+        .crack {
+            position: absolute;
+            background: #7b4300;
+            border-radius: 20px;
+            box-shadow: 0 0 4px rgba(0,0,0,0.12);
+        }
+
+        .c1 { width: 6px; height: 90px; left: 132px; top: 48px; transform: rotate(16deg); }
+        .c2 { width: 5px; height: 66px; left: 104px; top: 110px; transform: rotate(52deg); }
+        .c3 { width: 5px; height: 58px; left: 161px; top: 118px; transform: rotate(-48deg); }
+        .c4 { width: 4px; height: 44px; left: 82px; top: 84px; transform: rotate(-28deg); }
+        .c5 { width: 4px; height: 48px; left: 182px; top: 88px; transform: rotate(30deg); }
+        .c6 { width: 5px; height: 68px; left: 126px; top: 138px; transform: rotate(-12deg); }
+        .c7 { width: 4px; height: 40px; left: 98px; top: 178px; transform: rotate(20deg); }
+        .c8 { width: 4px; height: 42px; left: 170px; top: 176px; transform: rotate(-26deg); }
+
+        #shardLayer {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .shard {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background:
+                radial-gradient(circle at 30% 28%, #fff8bf 0%, #ffd53d 28%, #f09b00 66%, #b75d00 100%);
+            box-shadow:
+                inset 5px 5px 8px rgba(255,255,255,0.3),
+                0 8px 16px rgba(0,0,0,0.16);
+            animation: shardFly var(--duration) cubic-bezier(.16,.8,.2,1) forwards;
+            opacity: 1;
+        }
+
+        @keyframes shardFly {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            25% {
+                opacity: 1;
+            }
+            100% {
+                transform:
+                    translate(calc(-50% + var(--moveX)), calc(-50% + var(--moveY)))
+                    rotate(var(--rotate))
+                    scale(0.45);
+                opacity: 0;
+            }
+        }
+
+        .hintList {
+            margin-top: 12px;
+            padding-left: 18px;
+            color: #666;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        #youtubePlayer {
+            width: 1px;
+            height: 1px;
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .play-area {
+                min-height: 620px;
+            }
+
+            #ballWrap {
+                width: 320px;
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <h1>🍊 인물 얼굴 왁뿌볼</h1>
+        <p class="sub">사진 넣고, 유튜브 ASMR 연결하고, 꾹 눌러서 오래오래 뿌셔 보자</p>
+
+        <div class="layout">
+            <div class="panel">
+                <h2>설정</h2>
+
+                <div class="row">
+                    <label for="faceInput">1) 얼굴 사진 업로드</label>
+                    <input type="file" id="faceInput" accept="image/*">
+                </div>
+
+                <div class="previewWrap">
+                    <div id="previewFace"></div>
+                </div>
+
+                <div class="row" style="margin-top: 14px;">
+                    <label for="youtubeUrl">2) 유튜브 ASMR 주소</label>
+                    <input
+                        type="text"
+                        id="youtubeUrl"
+                        placeholder="예: https://www.youtube.com/watch?v=xxxxxxxxxxx"
+                    >
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-pink" onclick="loadYouTubeSound()">사운드 연결</button>
+                    <button class="btn-yellow" onclick="toggleSound()">재생 / 정지</button>
+                    <button class="btn-blue" onclick="resetBall()">다시 만들기</button>
+                </div>
+
+                <div id="statusBox">
+                    사진을 넣고, 원하면 유튜브 ASMR 주소도 연결해 주세요.<br>
+                    그 다음 오른쪽 공을 <b>꾹 누르고 있으면</b> 천천히 뿌셔집니다.
+                </div>
+
+                <ul class="hintList">
+                    <li>왁뿌볼은 <b>클릭</b>보다 <b>꾹 누르기</b>가 더 자연스러워요.</li>
+                    <li>깨진 뒤에는 안쪽 얼굴 공을 <b>드래그</b>하면 늘어납니다.</li>
+                    <li>유튜브 영상이 임베드 금지면 재생이 안 될 수 있어요.</li>
+                    <li>실행은 <b>VS Code + Live Server</b> 추천!</li>
+                </ul>
+            </div>
+
+            <div class="panel play-area">
+                <div class="stage-title">터치 / 마우스로 눌러 보세요</div>
+                <div class="stage-guide" id="guideText">꾹 누르면 금이 가고, 더 누르면 오래 뿌셔집니다.</div>
+
+                <div id="meterWrap">
+                    <div id="meterFill"></div>
+                </div>
+                <div id="meterText">압력 0%</div>
+
+                <div id="stage">
+                    <div id="ballWrap">
+                        <div id="shadow"></div>
+
+                        <div id="goo">
+                            <div id="gooFaceOverlay"></div>
+                        </div>
+
+                        <div id="shell">
+                            <div id="crackLayer">
+                                <span class="crack c1"></span>
+                                <span class="crack c2"></span>
+                                <span class="crack c3"></span>
+                                <span class="crack c4"></span>
+                                <span class="crack c5"></span>
+                                <span class="crack c6"></span>
+                                <span class="crack c7"></span>
+                                <span class="crack c8"></span>
+                            </div>
+                        </div>
+
+                        <div id="shardLayer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="youtubePlayer"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        const faceInput = document.getElementById("faceInput");
+        const previewFace = document.getElementById("previewFace");
+        const youtubeUrl = document.getElementById("youtubeUrl");
+        const statusBox = document.getElementById("statusBox");
+        const guideText = document.getElementById("guideText");
+        const meterFill = document.getElementById("meterFill");
+        const meterText = document.getElementById("meterText");
+
+        const shell = document.getElementById("shell");
+        const goo = document.getElementById("goo");
+        const shardLayer = document.getElementById("shardLayer");
+
+        let pressValue = 0;
+        let pressTimer = null;
+        let isBroken = false;
+        let selectedFaceSrc = "";
+        let player = null;
+        let ytReady = false;
+        let soundLoaded = false;
+        let draggingGoo = false;
+        let startX = 0;
+        let startY = 0;
+
+        function updateStatus(message) {
+            statusBox.innerHTML = message;
+        }
+
+        function updateMeter() {
+            meterFill.style.width = pressValue + "%";
+            meterText.textContent = "압력 " + Math.floor(pressValue) + "%";
+        }
+
+        function resetCrackClass() {
+            shell.classList.remove("crack-1", "crack-2", "crack-3");
+        }
+
+        function setCrackByPressure() {
+            resetCrackClass();
+
+            if (pressValue >= 30 && pressValue < 60) {
+                shell.classList.add("crack-1");
+                guideText.textContent = "금이 조금 갔어요...";
+            } else if (pressValue >= 60 && pressValue < 90) {
+                shell.classList.add("crack-2");
+                guideText.textContent = "점점 깨지고 있어요...";
+            } else if (pressValue >= 90) {
+                shell.classList.add("crack-3");
+                guideText.textContent = "거의 다 뿌셔집니다!";
+            } else {
+                guideText.textContent = "꾹 누르면 금이 가고, 더 누르면 오래 뿌셔집니다.";
+            }
+        }
+
+        faceInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                selectedFaceSrc = e.target.result;
+                previewFace.style.backgroundImage = `url('${selectedFaceSrc}')`;
+                goo.style.setProperty("--faceImage", `url('${selectedFaceSrc}')`);
+
+                updateStatus(
+                    "얼굴 사진을 넣었어요!<br>" +
+                    "이제 오른쪽 공을 꾹 눌러서 뿌셔 보세요."
+                );
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function extractYouTubeId(url) {
+            const regExp =
+                /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regExp);
+            return match ? match[1] : null;
+        }
+
+        function onYouTubeIframeAPIReady() {
+            ytReady = true;
+        }
+
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+        function loadYouTubeSound() {
+            const url = youtubeUrl.value.trim();
+
+            if (!url) {
+                updateStatus("유튜브 주소를 먼저 입력해 주세요.");
+                return;
+            }
+
+            const videoId = extractYouTubeId(url);
+
+            if (!videoId) {
+                updateStatus("유튜브 주소 형식이 아니에요. 다시 확인해 주세요.");
+                return;
+            }
+
+            if (!ytReady) {
+                updateStatus("유튜브 API가 아직 준비되지 않았어요. 1~2초 후 다시 눌러 주세요.");
+                return;
+            }
+
+            if (player) {
+                player.loadVideoById(videoId);
+                soundLoaded = true;
+                updateStatus("새 유튜브 ASMR을 연결했어요!<br>재생 / 정지 버튼이나 공 누르기로 재생할 수 있어요.");
+                return;
+            }
+
+            player = new YT.Player("youtubePlayer", {
+                height: "1",
+                width: "1",
+                videoId: videoId,
+                playerVars: {
+                    playsinline: 1,
+                    controls: 0,
+                    rel: 0
+                },
+                events: {
+                    onReady: function () {
+                        soundLoaded = true;
+                        updateStatus(
+                            "유튜브 ASMR 연결 완료!<br>" +
+                            "이제 공을 누를 때 소리를 같이 사용할 수 있어요."
+                        );
+                    },
+                    onError: function () {
+                        soundLoaded = false;
+                        updateStatus(
+                            "이 유튜브 영상은 재생이 안 될 수 있어요.<br>" +
+                            "다른 영상 주소로 바꿔 보세요."
+                        );
+                    }
+                }
+            });
+        }
+
+        function playSound() {
+            if (player && soundLoaded) {
+                try {
+                    player.playVideo();
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+
+        function pauseSound() {
+            if (player && soundLoaded) {
+                try {
+                    player.pauseVideo();
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+
+        function toggleSound() {
+            if (!player || !soundLoaded) {
+                updateStatus("먼저 유튜브 사운드를 연결해 주세요.");
+                return;
+            }
+
+            const state = player.getPlayerState();
+
+            if (state === 1) {
+                pauseSound();
+                updateStatus("사운드를 일시정지했어요.");
+            } else {
+                playSound();
+                updateStatus("사운드를 재생했어요.");
+            }
+        }
+
+        function startVibrate(pattern) {
+            if ("vibrate" in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        function startPress(event) {
+            event.preventDefault();
+
+            if (isBroken) return;
+
+            shell.classList.add("pressed");
+            playSound();
+
+            if (pressTimer) return;
+
+            pressTimer = setInterval(function () {
+                pressValue += 4.5;
+
+                if (pressValue > 100) {
+                    pressValue = 100;
+                }
+
+                updateMeter();
+                setCrackByPressure();
+
+                if (pressValue >= 100) {
+                    breakBall();
+                }
+            }, 90);
+
+            updateStatus(
+                "누르는 중...<br>" +
+                "금이 가는 소리와 함께 천천히 뿌셔지고 있어요."
+            );
+        }
+
+        function stopPress() {
+            shell.classList.remove("pressed");
+
+            if (pressTimer) {
+                clearInterval(pressTimer);
+                pressTimer = null;
+            }
+        }
+
+        function breakBall() {
+            if (isBroken) return;
+
+            isBroken = true;
+            stopPress();
+            startVibrate([80, 50, 100, 50, 140]);
+
+            guideText.textContent = "빠각! 껍질이 뿌셔졌어요. 이제 안쪽 얼굴 공을 잡아 늘려 보세요.";
+            updateStatus(
+                "껍질이 뿌셔졌어요!<br>" +
+                "이제 안쪽 얼굴 공을 마우스나 손가락으로 잡아 늘려 보세요."
+            );
+
+            createShards(28);
+
+            shell.classList.add("crack-3");
+
+            setTimeout(function () {
+                shell.classList.add("hide-shell");
+            }, 250);
+
+            setTimeout(function () {
+                goo.classList.add("show");
+            }, 350);
+        }
+
+        function createShards(count) {
+            shardLayer.innerHTML = "";
+
+            for (let i = 0; i < count; i++) {
+                const shard = document.createElement("div");
+                shard.className = "shard";
+
+                const size = 24 + Math.random() * 48;
+                const angle = (Math.PI * 2 / count) * i;
+                const distance = 110 + Math.random() * 180;
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                const rotate = (-320 + Math.random() * 640) + "deg";
+                const duration = (2.8 + Math.random() * 1.8) + "s";
+
+                shard.style.width = size + "px";
+                shard.style.height = size + "px";
+
+                shard.style.borderRadius =
+                    (20 + Math.random() * 50) + "% " +
+                    (20 + Math.random() * 50) + "% " +
+                    (20 + Math.random() * 50) + "% " +
+                    (20 + Math.random() * 50) + "%";
+
+                shard.style.setProperty("--moveX", moveX + "px");
+                shard.style.setProperty("--moveY", moveY + "px");
+                shard.style.setProperty("--rotate", rotate);
+                shard.style.setProperty("--duration", duration);
+
+                shardLayer.appendChild(shard);
+
+                setTimeout(function () {
+                    shard.remove();
+                }, 5000);
+            }
+        }
+
+        function startGooDrag(event) {
+            if (!isBroken) return;
+
+            draggingGoo = true;
+            startX = event.clientX;
+            startY = event.clientY;
+
+            goo.style.transition = "none";
+            playSound();
+            startVibrate(20);
+
+            if (goo.setPointerCapture) {
+                goo.setPointerCapture(event.pointerId);
+            }
+
+            updateStatus("말랑한 얼굴 공을 늘리는 중...");
+        }
+
+        function moveGoo(event) {
+            if (!draggingGoo) return;
+
+            const dx = event.clientX - startX;
+            const dy = event.clientY - startY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            const limitedDist = Math.min(dist, 140);
+            const scaleX = 1 + limitedDist / 260;
+            const scaleY = 1 - limitedDist / 520;
+            const rotate = Math.max(-12, Math.min(12, dx / 10));
+            const moveX = dx * 0.18;
+            const moveY = dy * 0.18;
+
+            goo.style.transform =
+                `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+
+            guideText.textContent = "쭈우욱... 말랑말랑 늘어나는 중!";
+        }
+
+        function endGooDrag() {
+            if (!draggingGoo) return;
+
+            draggingGoo = false;
+            goo.style.transition = "transform 0.35s cubic-bezier(.2,.8,.2,1)";
+            goo.style.transform = "translate(-50%, -50%) scale(1)";
+            guideText.textContent = "말랑한 얼굴 공이 원래 모양으로 돌아왔어요.";
+            updateStatus("늘어났다가 다시 탱글하게 돌아왔어요.");
+        }
+
+        function resetBall() {
+            stopPress();
+
+            pressValue = 0;
+            isBroken = false;
+            draggingGoo = false;
+
+            updateMeter();
+            resetCrackClass();
+
+            shell.classList.remove("hide-shell");
+            shell.classList.remove("pressed");
+
+            goo.classList.remove("show");
+            goo.style.transition = "opacity 0.6s, transform 0.45s cubic-bezier(.2, .8, .2, 1)";
+            goo.style.transform = "translate(-50%, -50%) scale(0.84)";
+
+            shardLayer.innerHTML = "";
+
+            guideText.textContent = "꾹 누르면 금이 가고, 더 누르면 오래 뿌셔집니다.";
+
+            if (selectedFaceSrc) {
+                updateStatus("다시 만들었어요! 또 꾹 눌러서 뿌셔 보세요.");
+            } else {
+                updateStatus("다시 만들었어요! 먼저 얼굴 사진을 넣으면 더 재미있어요.");
+            }
+        }
+
+        updateMeter();
+
+        shell.addEventListener("pointerdown", startPress);
+        window.addEventListener("pointerup", stopPress);
+        window.addEventListener("pointercancel", stopPress);
+        window.addEventListener("pointerleave", stopPress);
+
+        goo.addEventListener("pointerdown", startGooDrag);
+        window.addEventListener("pointermove", moveGoo);
+        window.addEventListener("pointerup", endGooDrag);
+        window.addEventListener("pointercancel", endGooDrag);
+    </script>
+</body>
+</html>

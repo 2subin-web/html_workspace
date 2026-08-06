@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            width: 700px;
+            height: 500px;
+            background-color: aqua;
+            margin: auto;
+        }
+        #control{
+            width: 200px;
+            height: 500px;
+            background-color: blue;
+            float: left;
+
+        }
+        #content{
+            width: 500px;
+            height: 500px;
+            background-color: white;
+            float: left;
+            text-align: center;
+        }
+        #content img{
+            width: 300px;
+            height: 400px;
+            opacity: 1; /* 0~1 투명도 조절값, 0이면 투명 1이면 불투명*/
+            rotate:0deg; /* 북쪽이 0도며, 시계 방향으로 각도가 증가 */
+            
+        }
+    </style>
+    <script>
+        let w=300;
+        let h=400;
+        let op=1;
+        let r=0;
+        // CSS3 부터는 상당히 수준 높은 고퀄리티의 CSS 제어가 가능
+        // 예) 포토샵의 필터와 비슷한 기능도 지원
+        function widthPlus(){
+           w=w+10;
+            // 문서내의 pic 라는 아이디를 갖는 요소의 스타일 중에서도
+            // 너비의 값을 증가하겠다..
+            document.getElementById("pic").style.width= w +"px";
+        }
+            
+        function widthMinus(){
+            w=w-10;
+            document.getElementById("pic").style.width= w + "px";
+        }
+
+        function minusOpa(){
+            op=op-0.1;
+            document.getElementById("pic").style.opacity= op;
+        }
+        
+        function plusOpa(){
+            op=op+0.1;
+            document.getElementById("pic").style.opacity= op;
+        }
+
+        function heightPlus(){
+            h=h+10;
+            document.getElementById("pic").style.height= h + "px";
+        }
+        function heightMinus(){
+            h=h-10;
+            document.getElementById("pic").style.height= h + "px";
+        }
+
+        function addRotate(){
+            r=r+5;
+            //문서내의 pic 이라는 아이이디를 갖는 요소의 스타일 중 rotate를 증가
+            document.getElementById("pic").style.rotate= r + "deg";
+        }
+        
+        function minusRotate(){
+            r=r-5;
+            document.getElementById("pic").style.rotate= r + "deg"; 
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="control">
+            <div>
+                <button onclick="widthPlus()">너비+</button>
+                <button onclick="widthMinus()">너비-</button>
+            </div>
+            <div>
+                <button onclick="heightPlus()">높이+</button>
+                <button onclick="heightMinus()">높이-</button>
+            </div>
+            <div>
+                <button onclick="plusOpa()">투명도+</button>
+                <button onclick="minusOpa()">투명도-</button>
+            </div>
+            <div>
+                <button onclick="addRotate()">회전+</button>
+                <button onclick="minusRotate()">회전-</button>
+            </div>
+        </div>
+        <div id="content">
+            <img src="../../images/ddd.jpg" alt="" id="pic">
+        </div>
+
+        
+    </div>
+</body>
+</html>

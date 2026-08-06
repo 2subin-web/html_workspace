@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쫌 어려운디</title>
+    <style>
+        #circle{
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            border-radius: 50px;
+        }
+    </style>
+    <script>
+        let color="black"; //최초 기본 검정
+        let flag=false;
+
+        function setColor(){
+            //color="yellow";
+            /* 
+            아직 조건문을 배우지 않았으므로, 연산자 수준에서
+            문제를 해결하려면, 연산자 중, 흑백논리를 판단하는
+            삼항연산자를 사용해보자 
+            */
+           color=(flag)? "black" : "yellow";
+           flag=!flag;
+            
+            /* 문서내의 circle 이라 불리는 아이디를 갖는 요소의
+            스타일 중에서도 background 색상을 바꾸자 */
+            document.getElementById("circle").style.background=color;
+
+        }
+    </script>
+</head>
+<body>
+
+    <button onclick="setColor()">전환</button>
+
+    <div id="circle"></div>
+</body>
+</html>

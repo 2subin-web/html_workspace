@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #content{
+            font-size: 200px;
+            color:red;
+        }
+    </style>
+    <script src="../lib/common.js"></script>
+    <script>
+        let n=0; //전역변수
+
+        function setCount(){
+            n++
+            //문서내의 content 라는 id를 갖는 요소의
+            document.getElementById("content").innerText=getNumString(n);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="setCount()">카운트 올리기</button>
+    <div id="content">00</div>
+</body>
+</html>

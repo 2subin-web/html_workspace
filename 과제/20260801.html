@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지구를 지키자</title>
+
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #container {
+            position: relative;
+
+            width: 550px;
+            height: 300px;
+
+            background-image: url("https://i.namu.wiki/i/GhRScrmtLIlWQgtu0Yih4Udh1dPrMQ9a__J3mr8Q-q4bDBwQ2pzif0NXcDJvzSph-R5I-nWcjN9R3RjVknqmKg.webp");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            overflow: hidden;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
+        #box {
+            position: absolute;
+
+            width: 50px;
+            height: 50px;
+
+            left: 0px;
+            top: 150px;
+
+            background-image: url("../images/NewJeans C.png");
+            background-size: 50px 50px;
+            background-repeat: no-repeat;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script>
+        let x = 0;
+        let speed = 10;
+
+        function move() {
+
+            x = x + speed;
+
+            if (x >= 500) {
+                x = 500;
+                speed = -10;
+            }
+
+            if (x <= 0) {
+                x = 0;
+                speed = 10;
+            }
+
+            document.getElementById("box").style.left = x + "px";
+        }
+
+        function auto() {
+            setInterval("move()", 100);
+        }
+    </script>
+</head>
+
+<body>
+
+    <button onclick="move()">수동</button>
+    <button onclick="auto()">자동</button>
+
+    <div id="container">
+        <h2>지구를 지키자 출동!</h2>
+        <div id="box"></div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin: 0px;}
+        .container{
+            width: 100%;
+            height: 700px;
+            background-color:#A7D8FF;
+            position: relative;
+        }
+        img{
+            width: 100px;
+            position: absolute; /*노란색 배경인 부모 div를 기준으로
+            아이콘들의 위치를 결정할 예정이므로..*/
+        }
+        #p1{left: 0px;top: 250px;}
+        #p2{left: 0px;top: 400px;}
+        #p3{left: 150px;top: 250px;}
+    </style>
+    <script>
+        let flag=false;
+        function move(){
+            /*브라우저에서 발생하는 모든 이벤트는 js의 event 객체로
+            그 정보가 메모리에 올라옴 */
+            if(flag){
+            console.log(event);
+            let x = event.clientX;
+            let y = event.clientY;
+            document.getElementById("info").innerText=`마우스 x축=${x}, 마우스 y축=${y}`;
+            //마우스의 좌표를 이미지의 포지션값으로 사용하자
+            document.getElementById("p1").style.left=(x-50)+"px";
+            document.getElementById("p1").style.top=(y-50)+"px";
+        }
+    }
+        //매개변수를 활용하여, 나머지 이미지에 대해서도 같은 효과 내기!!
+        function setFlag(){
+        //병아리를 움직일지 여부를 결정하는 논리값을 뒤집자
+        flag=!flag;
+
+        //사용자들을 배려하기 위해 드래그 가능할 경우 무언가
+        //UI를 적용 (우리의 경우 경계선을 부여하자)
+        let border = (flag)? 2:0;
+        document.getElementById("p1").style.border=`${border}px solid blue`;
+        }
+
+    </script>
+</head>
+<!-- onMouseMove 는 사용자가 마우스를 움직이는 동안 발생하는 이벤트를 
+ 감지하는 핸들러-->
+<body onMouseMove="move()">
+    <div class="container">
+    
+        <img src="../images/NewJeans A.png" id="p1" onClick="setFlag()">
+        <img src="../images/NewJeans B.png"id="p2">
+        <img src="../images/NewJeans C.png"id="p3">
+    </div>
+    <h2 id="info">마우스 좌표</h2>
+</body>
+</html>

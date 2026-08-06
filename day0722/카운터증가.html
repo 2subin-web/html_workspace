@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* 
+        아래의 브레이스 영역에 개발자가 이름을 붙여놓은
+        단위를 가리켜 함수라한다. 단 js에서 개발자가
+        정의하는 함수는 반드시 함수명 앞에 function 선언
+        =사용자 정의 함수라고 한다. 함수는 반드시 호출해야만
+        동작하므로, 지금부터는 아래의 영역은 무조건 수행되지 않는다. 
+        */
+
+        let x=0;
+
+        function counter(){
+            /* 함수영역 즉 브레이스 영역 내에서 선언된 변수는 해당
+            브레이스에서만 살아가므로, 이러한 변수를 가리켜 지역변수라 한다.
+            따라서 프로그램이 실행되는 동안 데이터가 누적될 수 없다
+            해결책? 변수 선언의 위치를 브레이스 바깥쪽으로 빼버리자
+            그 어떠한 브레이스 안에도 선언하지말자
+            let x=0; 
+            */
+
+            
+            x=x+1;
+            console.log("줄넘기 "+ x +"회");
+        }
+    </script>
+</head>
+<body>
+    <!-- 
+    자바스크립트의 코드를 작성할 수 있는 3가지 영역
+    1) <script> 태그 사이에
+    2) onClick과 같은 이벤트 핸들러 안에
+    3) <a href="jacascript: 여기는 js영역"> </a> 
+    
+    
+    그 중 onClick은 사용자가 클릭 이벤트를 발생시켰을때
+    어떤 js 코드를 실행할지를 결정하는 핸들러임
+
+    참고로 이벤트(event)란? 
+    - 사건, 사고 등을 의미하는데, 일반적으로 프로그래밍
+    안에서의 이벤트란, 해당 프로그램내에서 발생하는
+    이벤트로 국한된다..
+    예 mousemove, keydown, keyup 등등..
+    -->
+
+    <button onClick="counter()">카운터</button>
+    <button onDblclivk="counter()">더블클릭</button>
+    
+</body>
+</html>

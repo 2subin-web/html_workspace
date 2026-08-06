@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+    function init(){
+        //문서내의 첫번째 버튼에 클릭 이벤트 연결
+        document.getElementById("bt1").addEventListener("click",function(){
+            alert("나 눌렀어?");
+        });
+
+        //두번째 버튼에 마우스가 올라가면..
+        document.getElementById("b2").addEventListener("mouseover", function())
+            alert("마우스 올렸어?");
+    }
+    </script>
+</head>
+<body onload="init()">
+        <!-- 지금까지는 이벤트 핸들러 연결을 태그에 직접 했지만
+         js를 이용한 방법도 있다(즉 프로그래밍적으로 이벤트핸들러 연결 가능)
+    -->
+    <button id="bt1">버튼 1</button>
+    <button id="bt2">버튼 2</button>
+
+
+</body>
+</html>

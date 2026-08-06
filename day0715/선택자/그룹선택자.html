@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        h1, h2{
+            color: red;
+        }
+        .parent{
+            border: 1px dotted blue;
+        }
+        .parent>span{
+            background-color: #ffcccc;
+        }
+
+        /* 후손 선택자*/
+        .parent span{
+            color: red;
+        }
+
+        /* 인접 형제 선택지*/
+        #target + span{
+            background-color: #ccffcc;
+        }
+
+        /*
+        일반 형제 선택자
+        */
+        #target ~ span{
+            border: 3px solid #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <h1>css 선택자 공부 중...</h1>
+    <h2>아래 박스들의 변화를 확인해 보세요</h2>
+
+    <!-- division의 약어(화면을 분할하는 용도의 태그)-->
+    <div class="parent">
+        <!-- span은 아무런 효과가 없는 태그이다.
+         단 마크업이 적용되었으므로, style 등을 적용할
+         기회가 생긴 데에 의미가 있다-->
+        <span>1번 자식</span>
+        <span id="target">2번 자식</span>
+        <span>3번 자식</span>
+        <span>4번 자식</span>
+        <p>
+            <span>5번 자식</span>
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute; /부모인 body를 기준으로 할거임/
+            left:0px;
+            top:100px;
+            border-radius: 50%; /모서리 둥글게/
+        }
+    </style>
+
+    <script>
+        let targetX=500; //목표 지점
+        let targetY=300;
+        let a=0.1;//비율 계수(이 숫자가 높을 수록 투박함)
+                   //즉 기울기가 커지므로 변화량이 커짐.. 
+
+        //목표지점에 한번에 다가가는 함수
+        function jump(){
+            let box = document.getElementById("box");
+           
+        }
+
+        //목표지점에 야금 야금 조금씩 다가가는 함수
+        //즉 목표 지점을 나누어서 가기..
+        //내위치 = 현재내위치 + 비율(목표지점-현재나의위치)
+        function soft(){
+            let box = document.getElementById("box");
+
+            box.style.left=parseFloat(box.style.left)+a*(targetX-parseFloat(box.style.left))+"px";
+            box.style.top=parseFloat(box.style.left)+a*(targetX-parseFloat(box.style.left))+"px";
+            //box 안에 좌표 출력
+            box.innerText=box.style.left;
+        }
+        //사용자가 문서에서 마우스를 누르면, 마우스의 x축,y축 정보를
+        //얻어와서, targetX, targetY 즉 목표지점에 적용해보자
+        function init(){
+            //js 는 브라우저에서 발생하는 모든 이벤트를 catch하여
+            //메모리에 event 객체 형태로 올려주므로, 사용자가 마우스와
+            //관련된 행동을 하면 이것 또한 event 객체에 이벤트에 대한
+            //정보가 담겨있다.
+            targetX = event.clientX; // 목표 x지점 새롭게 설정
+            targetY = event.clientY; // 목표 y지점 새롭게 설정
+        }
+    </script>
+</head>
+<body onload="init() "onMouseMove="getPos()">
+    <div style="width: 1000px; height:900px; background-color: yellow;"></div>
+    <div id="box" style="position:absolute;left:0px;top: 0px"></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            width: 350px;
+            height: 450px;
+            background-color: black;
+            margin: auto;
+        }
+        .header{
+            width: 100%;
+            height: 50px;
+            background-color: aqua;
+        }
+        .content{
+            width: 100%;
+            height: 400px;
+            background-color: bisque;
+        }
+        .header div{
+            width: 50px;
+            height: 50px;
+            float: left;
+        }
+        .box1{background-color: red;}
+        .box2{background-color: orange;}
+        .box3{background-color: yellow;}
+        .box4{background-color: green;}
+        .box5{background-color: blue;}
+        .box6{background-color: navy;}
+        .box7{background-color: purple;}
+        
+    </style>
+    <script>
+        function setBg(){
+            //문서내의 content라는 id를 갖는 요소의 배경색을 red로 적용
+            document.getElementById("content").style.backgroundColor="red"
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="box1" onMouseOver="setBg()"></div>
+            <div class="box2"></div>
+            <div class="box3"></div>
+            <div class="box4"></div>
+            <div class="box5"></div>
+            <div class="box6"></div>
+            <div class="box7"></div>
+        </div>
+        <div class="content" id="content"></div>
+    </div>
+</body>
+</html>

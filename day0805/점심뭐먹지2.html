@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        //이미지명을 랜덤하게 접근하려면 배열로 후보들을 올려놓아야 함
+        let 뉴진스=["NewJeans A.png",
+                    "NewJeans B.png",
+                    "NewJeans C.png",
+                    "NewJeans D.png"
+        ];
+        // 문서가 로드되면 이미지를 동적으로 생성하여 body에 추가
+        function init() {
+
+            // img 태그 생성
+            let img = document.createElement("img");
+            // <img> 작성과 동일 효과
+            //하지만 아직 이 img를 어느 부모 요소에 부착할지를 결정하지는
+            // 않은 상태라서 보이지는 않는다.. (즉 메모리에만 생성)
+            //id나 name은 여러 요소들간 구분이 목적이지만, boby는
+            //하나의 문서에 오직 1개만 존재하므로, id나 name을 붙일 
+            //이유가 없다.
+            Math.random();*food.length; // 0.1~~0.9xx 난수 발생
+            img.src="../images/food/우리가 결정x";
+            document.body.appendChild(img);// body요소에 img를 자식으로 부착
+        }
+    </script>
+</head>
+
+<body onload="init()id="body">
+
+</body>
+</html>

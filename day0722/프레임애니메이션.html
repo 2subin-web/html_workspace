@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 300px;
+
+        }
+    </style>
+    <script>
+        let n=1;
+        //함수로 정의해놓아야, 내가 원하는 시점에 실행할 수 있음
+        function manual(){
+            n++
+            if(n>=11){
+                n=1;
+            }
+            //문서내의 pic이라 불리는 id를 갖는 요소의 src를 1씩 증가
+            document.getElementById("pic").src="../../images/cheetah/"+n+".png";
+        }
+        /* 자동이란? 기존의 개발자가 정의해놓은 수동함수를 호출하며 된다 */
+        function auto(){
+            //setInterval("호출할 함수명", 몇초간격)
+            setInterval("manual()", 100 );
+        }
+    </script>
+</head>
+<body>
+
+    <button onClick="manual()">수동</button>
+    <button onClick="auto()">자동</button>
+    <div>
+        <img src="../../images/cheetah/1.png" id="pic">
+    </div>
+    
+</body>
+</html>

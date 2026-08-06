@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       .container{
+            width: 300px;
+            height: 400px;
+            background-color: aquamarine;
+            float: left;
+            margin: 50px;
+        }
+        .area{
+            width: 100%;
+            height: 350px;
+            background-color: yellow;
+        }
+
+        .area textarea{
+            width: 98%;
+            height: 98%;
+            background-color: yellow;
+        }
+        .text{
+            width: 100%;
+            height: 50px;
+            background-color: chartreuse;
+         }
+         .text input{
+            width: 98%;
+            height: 98%;
+            background-color: chartreuse;
+            border: 0px;
+         }
+    </style>
+    <script>
+        function send(my_input, my_area, your_area){
+            /*
+            javascript 는 브라우저에서 발생하는 모든 이벤트에 대해
+            실시간으로 event 객체에 그 정보를 담아서 개발자가 전달해줌
+            click, mouse, key, load..등등 이러한 이벤트가 발생할때마다
+            1:1 대응되는 event 객체가 메모리에 올라옴
+            */
+            //console.log("지금 당신이 발생시킨 키보드 이벤트에 대한 정보"event);
+            console.log("당신이 누른 키에 대응되는 아스키는", event.keyCode);
+
+            if(event.keyCode==13){//엔터 입력시에만..
+            //1)좌측 창의 area에 입력한 텍스트 반영(누적)
+            let msg = document.getElementById(my_input).value; //사용자가 입력한 값
+            document.getElementById(my_area).append(msg+"\n"); // 로그 창에 반영
+            //document.getElementById("area1")
+            //2)우측 창의 area에 입력한 텍스트 반영(누적)
+            document.getElementById(your_area).append(msg+"\n");
+
+            //3)입력한 메세지 지우기
+            document.getElementById(my_input).value="";//초기화
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+   <div class="container">
+    <div class="area">
+        <textarea id="area1"></textarea>
+    </div>
+
+    <div class="text">
+        <!--
+            onKeyDown : 키보드 누를때 (누르는 타이밍-총알 발사)
+            onKeyUp : 키보드 눌렀다 땔때(타자 시점..)
+        -->
+       <input type="text" id="t1" onkeyup="send('t1', 'area1', 'area2')">
+
+<div class="container">
+    <div class="area">
+        <textarea id="area2"></textarea>
+    </div>
+
+    <div class="text">
+        <input type="text" id="t2" onkeyup="send('t2', 'area2', 'area1')">
+    </div>
+</div>
+
+</body>
+</html>

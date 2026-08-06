@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    //자동 구현 프로그래밍 시, 언제나 수동 코드를 먼저 작성하자
+    let r = 0;
+    let flag=false;
+    function rotate(){
+        if(flag){
+            r=r+5; //r+=5
+            //문서내의 pan 이라는 id를 갖는 요소의 css의 rotate를 증가 
+            document.getElementById("pan").style.rotate=r+"deg";
+        }
+    }
+
+    function auto(){
+        //어떤 함수를 몇초간격으로 호출할지 결정
+        setInterval("rotate()",10);
+
+    }
+
+    function control(){
+        flag=!flag;
+    }
+</script>
+<body onLoad="auto()">
+    <button onclick="control()">제어판</button>
+    <br>
+    <img src="../images/dart.jpg" id="pan">
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h2{
+            width: 150px;
+            background-color: pink;
+        }
+        span{
+            width: 200px;
+            height: 200px;
+            background-color: aqua
+        }
+    </style>
+</head>
+<body>
+    <!--
+        모든 태그는 인라인 또는 블락 중 하나로 분류됨
+        1) block 속성
+            - 다른 태그 요소와 수평선 상에 절대 공존할 수 없는 속성
+            - h1, h2..., p, div
+            - block 속성을 가진 태그들은 기본적으로 화면 끝까지 도달하는
+              100% 너비를 가지므로 다른 태그 요소와 공존할 기회가 없다
+            - 주의) 너비를 줄이더라도, 즉 공간이 남더라도 같은 수평선상의 공존은 여전히 불가
+            - 특징: width, height 적용 가능
+
+        2) inline 속성
+            - 다른 태그 요소와 수편선상 공존이 가능
+            - a, span...
+            - 특징: 태그 내부의 내용만큼만 크기를 확보함
+                    width, height 적용이 불가, 따라서 웹페이지의 화면
+                    구현하는 용도로는 사용되지 않음...
+        -->
+    <h2>난 소제목1</h2> 오늘 점심 뭐 먹지?
+    <span>사과</span>
+    <span>포도</span>
+    <span>파인애플</span>
+</body>
+</html>

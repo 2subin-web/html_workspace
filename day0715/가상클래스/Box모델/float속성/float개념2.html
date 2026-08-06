@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*
+        html에서 이미지와 텍스트를 공존시키면 서로의 높이차 때문에
+        이미지의 옆 공간이 비어 있는 것처럼 보이게 되는데, 문서의
+        형식이 깨진 것처럼 보인다(사실은 정상)
+        해결책? 이미지의 현재 위치를 정상적인 위치에서 벗어나도록 공중으로
+        띄우는 기술을 적용(float)
+        */
+        img{
+            width: 150px;
+            float: left;
+        }
+        /*div는 block형이고 block 속성은 float 되어 있는 물체를
+        볼 수 없으므로 이미지의 자리를 파고 들어가 버리는 현상
+        텍스트는 인라인 속성*/
+        div{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://picsum.photos/150" alt="실습용 이미지">
+    <div>난 box1</div>
+</body>
+</html>

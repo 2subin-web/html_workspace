@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>윤달 판단</title>
+</head>
+
+<body>
+    <h1>윤년 판단하기</h1>
+
+    <input type="number" id="year" placeholder="연도를 입력하세요">
+    <button onclick="checkYear()">확인</button>
+
+    <p id="result"></p>
+
+    <script>
+        function checkYear() {
+            let year = document.getElementById("year").value;
+            let result = document.getElementById("result");
+
+            if (year === "") {
+                result.innerText = "연도를 입력해주세요.";
+                return;
+            }
+
+            /*
+            윤년 조건
+            1. 4로 나누어 떨어지고 100으로 나누어 떨어지지 않거나
+            2. 400으로 나누어 떨어지는 해
+            */
+
+            if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                result.innerText = "윤년이 포함된 해네요.";
+            } else {
+                result.innerText = "윤년이 포함되지 않은 해네요.";
+            }
+        }
+    </script>
+</body>
+</html>

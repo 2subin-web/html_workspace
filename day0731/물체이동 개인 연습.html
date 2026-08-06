@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Desert Game</title>
+
+    <style>
+        body{
+            margin: 0;
+        }
+
+        .container{
+            width: 900px;
+            height: 700px;
+
+            position: relative;
+
+            background-image: url("../../desert/BG.png");
+            background-size: 990px 700px;
+
+            overflow: hidden;
+        }
+
+        #pic{
+            width: 70px;
+
+            position: absolute;
+
+            left: 50px;
+            top: 550px;
+        }
+
+        #enemy{
+            width: 35px;
+            height: 35px;
+
+            background-color: brown;
+
+            position: absolute;
+
+            left: 800px;
+            top: 615px;
+        }
+
+        #score{
+            position: absolute;
+
+            left: 20px;
+            top: 20px;
+
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        #speed{
+            position: absolute;
+
+            left: 20px;
+            top: 55px;
+
+            font-size: 18px;
+        }
+    </style>
+
+    <script>
+
+        // 배경 위치
+        let bgX = 0;
+
+
+        // 캐릭터 위치
+        let x = 50;
+        let y = 550;
+
+
+        // 장애물 위치
+        let enemyX = 800;
+
+
+        // 장애물 속도
+        let enemySpeed = 8;
+
+
+        // 점수
+        let score = 0;
+
+
+        // 점프 중인지 확인
+        let jumping = false;
+
+
+        // 게임 오버 여부
+        let gameOver = false;
+
+
+
+        // =========================
+        // 배경 움직이기
+        // =========================
+        function moveBackground(){
+
+            if(gameOver){
+                return;
+            }
+
+            bgX -= 5;
+
+            let container =
+                document.getElementById("container");
+
+            container.style.backgroundPosition =
+                bgX + "px 0px";
+        }
+
+
+
+        // =========================
+        // 캐릭터 좌우 이동
+        // =========================
+        function move(n){
+
+            if(gameOver){
+                return;
+            }
+
+            x += n;
+
+
+            // 왼쪽 벽
+            if(x < 0){
+                x = 0;
+            }
+
+
+            // 오른쪽 벽
+            if(x > 830){
+                x = 830;
+            }
+
+
+            document.getElementById("pic").style.left =
+                x + "px";
+        }
+
+
+
+        // =========================
+        // 점프
+        // =========================
+        function jump(){
+
+            if(gameOver){
+                return;
+            }
+
+
+            // 이미 점프 중이면 다시 점프 못함
+            if(jumping){
+                return;
+            }
+
+
+            jumping = true;
+
+
+            let jumpHeight = 0;
+
+
+            // 위로 올라가기
+            let up = setInterval(function(){
+
+                y -= 10;
+
+                jumpHeight += 10;
+
+
+                document.getElementById("pic").style.top =
+                    y + "px";
+
+
+                // 220px 올라가면
+                if(jumpHeight >= 220){
+
+                    clearInterval(up);
+
+
+                    // 아래로 내려오기
+                    let down = setInterval(function(){
+
+                        y += 10;
+
+
+                        document.getElementById("pic").style.top =
+                            y + "px";
+
+
+                        // 바닥 도착
+                        if(y >= 550){
+
+                            y = 550;
+
+
+                            document.getElementById("pic").style.top =
+                                y + "px";
+
+
+                            clearInterval(down);
+
+                            jumping = false;
+                        }
+
+                    }, 30);
+
+                }
+
+            }, 30);
+
+        }
+
+
+
+        // =========================
+        // 장애물 움직이기
+        // =========================
+        function moveEnemy(){
+
+            if(gameOver){
+                return;
+            }
+
+
+            enemyX -= enemySpeed;
+
+
+            document.getElementById("enemy").style.left =
+                enemyX + "px";
+
+
+            // 장애물이 화면 밖으로 나가면
+            if(enemyX < -35){
+
+                // 다시 오른쪽에서 시작
+                enemyX = 900;
+
+
+                // 점수 증가
+                score += 10;
+
+
+                // 장애물 속도 증가
+                if(enemySpeed < 20){
+                    enemySpeed += 0.5;
+                }
+
+
+                // 점수 표시
+                document.getElementById("score").innerText =
+                    "점수 : " + score;
+
+
+                // 속도 표시
+                document.getElementById("speed").innerText =
+                    "속도 : " + enemySpeed;
+            }
+
+        }
+
+
+
+        // =========================
+        // 충돌 검사
+        // =========================
+        function collision(){
+
+            if(gameOver){
+                return;
+            }
+
+
+            let pic =
+                document.getElementById("pic");
+
+
+            let enemy =
+                document.getElementById("enemy");
+
+
+            let picRect =
+                pic.getBoundingClientRect();
+
+
+            let enemyRect =
+                enemy.getBoundingClientRect();
+
+
+            // 서로 겹쳤는지 확인
+            if(
+                picRect.left < enemyRect.right &&
+                picRect.right > enemyRect.left &&
+                picRect.top < enemyRect.bottom &&
+                picRect.bottom > enemyRect.top
+            ){
+
+                gameOver = true;
+
+
+                alert(
+                    "게임 오버!\n점수 : " + score
+                );
+
+            }
+
+        }
+
+
+
+        // =========================
+        // 키보드 조작
+        // =========================
+        function keyControl(){
+
+            document.addEventListener(
+                "keydown",
+                function(e){
+
+
+                    // 왼쪽
+                    if(e.key == "ArrowLeft"){
+
+                        move(-20);
+
+                    }
+
+
+                    // 오른쪽
+                    if(e.key == "ArrowRight"){
+
+                        move(20);
+
+                    }
+
+
+                    // 위쪽 방향키 또는 스페이스
+                    if(
+                        e.key == "ArrowUp" ||
+                        e.code == "Space"
+                    ){
+
+                        e.preventDefault();
+
+                        jump();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        // =========================
+        // 게임 시작
+        // =========================
+        function startGame(){
+
+            keyControl();
+
+
+            // 배경 이동
+            setInterval(
+                moveBackground,
+                30
+            );
+
+
+            // 장애물 이동
+            setInterval(
+                moveEnemy,
+                30
+            );
+
+
+            // 충돌 확인
+            setInterval(
+                collision,
+                30
+            );
+
+        }
+
+
+
+        // 페이지 들어오면 바로 실행
+        window.onload = function(){
+
+            startGame();
+
+        };
+
+    </script>
+
+</head>
+
+<body>
+
+    <div
+        class="container"
+        id="container"
+    >
+
+        <div id="score">
+            점수 : 0
+        </div>
+
+
+        <div id="speed">
+            속도 : 8
+        </div>
+
+
+        <img
+            src="../images/야마자키.jpg"
+            id="pic"
+        >
+
+
+        <div id="enemy"></div>
+
+    </div>
+
+</body>
+</html>

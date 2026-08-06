@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            width: 800px;
+            height: 600px;
+            margin: auto;
+            background-color: aqua;
+        }
+        .header{
+            width: 100%;
+            height: 50px;
+            background-color: brown;
+        }
+        .header button{
+            width: 120px;
+            height: 50px;
+            background-color: blanchedalmond;
+            border: 0px;
+        }
+        .content{
+            width: 100%;
+            height: 550px;
+            background-color: bisque;
+        }
+    </style>
+    <script>
+        let board;
+        //문서가 로드되면 보이고 안보이고 처리
+        function init(){
+            //현재 name이 board인 배열로 생성된 요소를 얻어옴
+            board = document.getElementsByName("board");
+
+            board[0].style.display="none";
+            board[1].style.display="none";
+            board[2].style.display="none";
+            
+        }
+        function showHide(n){
+
+        for(let i=0; i<board.length; i++){
+            let v = (n==i)? "block" : "none"
+            board[i].style.display = v;
+        }
+    }
+    </script>
+</head>
+<body onload="init()">
+
+    <div class="container">
+        <div class="header"></div>
+            <button onclick="showHide(0)">고객센터</button>
+            <button onclick="showHide(1)">Q&A</button>
+            <button onclick="showHide(2)">FAQ</button>
+        <div class="content">
+        <!-- 고객센터 용 테이블 -->
+         <table width="100%" border="1px" name="board">
+            <tr>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>등록일</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>고객센터 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            
+         </table>
+         <!-- FAQ -->
+           <table width="100%" border="1px" name="board">
+            <tr>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>등록일</td>
+            </tr>
+            <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+             <tr>
+                <td>질문과 답변 게시판 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+
+         </table>
+
+          <table width="100%" border="1px" name="board">
+            <tr>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>등록일</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+            <tr>
+                <td>FAQ 서비스 시작(공지)</td>
+                <td>관리자</td>
+                <td>2026.08.04</td>
+            </tr>
+         </table>
+        
+         </div>
+    </div>
+</body>
+</html>

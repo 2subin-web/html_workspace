@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>게임 화면 구성해보기</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .container {
+            width: 960px;
+            height: 680px;
+            background-image: url(../images/desert/BG.png);
+            background-size: 960px 680px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="wrapper"></div>
+
+    <script>
+        for (let i = 1; i <= 20; i++) {
+            let pic = document.createElement("img");
+
+            pic.src = "../images/desert/objects/StoneBlock.png";
+
+            pic.style.width = "50px";
+            pic.style.height = "50px";
+            pic.style.position = "absolute";
+
+            let x = 50 * i;
+            pic.style.left = x + "px";
+            pic.style.top = "500px";
+
+            document.getElementById("wrapper").appendChild(pic);
+        }
+    </script>
+</body>
+</html>

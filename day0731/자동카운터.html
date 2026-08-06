@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            font-size: 250px;
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+    <script src="../lib/common.js"></script>
+    <script>
+        let n=0;
+        let flag=true; 
+
+        function manual(){
+            if(flag){
+                n++
+                //문서내의 content 라는 id 요소의 사이 텍스트 변경
+                let content = document.getElementById("content");
+                content.innerText=getNumString(n);
+            }
+        }    
+        //자동이란, 기존으 수동코드를 사람 대신 컴퓨터가 호출해주는 원리
+        function auto(){
+            //프로그래밍 언어에게 전달할 정보
+            // 1_ 어떤 함수를 호출할지 알려줘야 함
+            // 2_ 어떤 빠르기로 호출할지 알려줘야 함 1/1000초까지 표현가능
+            setInterval("manual()",100);
+        }
+
+        function pause(){
+            //논리값은 유일하게 뒤집을 수 있는 데이터형이라서,
+            //어떤 대상을 반대로 돌려놓을때 상당히 사용 빈도가 높다
+            flag=!flag;
+        }
+    </script>
+</head>
+<body>
+    <button onClick="manual()">수동 증가</button>
+    <button onClick="auto()">자동 증가</button>
+    <button onClick="pause()">일시정지</button>
+
+    <div id="content">00</div>
+</body>
+</html>
